@@ -5,4 +5,4 @@ pluginManagement {
         mavenCentral()
     }
 }
-rootProject.name = "SqlDelight-js-cipher"
+rootProject.name = "sqldelight-js-cipher"
