@@ -121,8 +121,9 @@ class SqlJsCipherDriver (var configuration: DatabaseConfiguration ): SqlDriver {
         setVersion(version)
       }
     } else if (initialVersion != version) {
-      if (initialVersion > version)
-        throw IllegalStateException("Database version $initialVersion newer than config version $version")
+      if (initialVersion > version) {
+          throw IllegalStateException("Database version $initialVersion newer than config version $version")
+        }
         transaction.run {
           upgrade(driver, initialVersion, version)
           setVersion(version)
