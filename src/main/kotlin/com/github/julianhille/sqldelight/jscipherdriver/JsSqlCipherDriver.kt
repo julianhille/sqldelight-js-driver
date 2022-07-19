@@ -110,21 +110,25 @@ class SqlJsCipherDriver (var configuration: DatabaseConfiguration ): SqlDriver {
     upgrade: (SqlDriver, Int, Int) -> Unit,
     version: Int
   ) {
-    // @TODO: Needs transaction
     val initialVersion = getVersion()
+    println("soimething mumble mumble $initialVersion")
+    println("soimething mumble mumble $db")
+    println("soimething mumble mumble $transaction")
+    val driver = this
     if (initialVersion == 0) {
-      create(this)
-      setVersion(version)
+      transaction.run {
+        create(driver)
+        setVersion(version)
+      }
     } else if (initialVersion != version) {
       if (initialVersion > version)
         throw IllegalStateException("Database version $initialVersion newer than config version $version")
-
-      upgrade(this, initialVersion, version)
-      setVersion(version)
+        transaction.run {
+          upgrade(driver, initialVersion, version)
+          setVersion(version)
+        }
     }
-
   }
-
 }
 
 class SqlJsCipherStatement: SqlPreparedStatement {
