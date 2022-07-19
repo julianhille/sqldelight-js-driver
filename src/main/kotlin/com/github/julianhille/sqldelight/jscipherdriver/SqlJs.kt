@@ -2,7 +2,7 @@
 @file:JsNonModule
 @file:Suppress("unused")
 
-package com.github.julianhille.sqldelight.jscipherdriver
+package com.github.julianhille.sqldelight.drivers.jscipher
 import kotlin.js.Promise
 
 open external class Error

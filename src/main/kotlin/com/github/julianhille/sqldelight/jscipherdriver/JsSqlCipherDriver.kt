@@ -1,4 +1,4 @@
-package com.github.julianhille.sqldelight.jscipherdriver
+package com.github.julianhille.sqldelight.drivers.jscipher
 
 import com.squareup.sqldelight.db.SqlCursor
 import com.squareup.sqldelight.db.SqlDriver
