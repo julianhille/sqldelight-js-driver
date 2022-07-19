@@ -32,8 +32,12 @@ class SqlJsCipherDriver (var configuration: DatabaseConfiguration): SqlDriver {
   private var transaction: Transacter.Transaction? = null
 
   init {
-    if (configuration.journalMode ) db.pragma("journal_mode = WAL")
-    if (configuration.key?.isNotBlank() == true) db.pragma("journal_mode = WAL")
+    if (configuration.journalMode ) {
+      db.pragma("journal_mode = WAL")
+    }
+    if (configuration.key?.isNotBlank() == true) {
+      db.pragma("key = WAL")
+    }
     migrateIfNeeded(configuration.create, configuration.upgrade, configuration.schema.version)
   }
 
