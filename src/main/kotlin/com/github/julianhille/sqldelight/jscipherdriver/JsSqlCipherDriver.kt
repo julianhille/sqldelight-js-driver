@@ -10,21 +10,37 @@ import org.khronos.webgl.Int8Array
 @JsNonModule @JsModule("better-sqlite3-multiple-ciphers")
 external fun createDatabase(path: String? = definedExternally, options: DatabaseOptions? = definedExternally): Database
 
-class DatabaseConfiguration(
-  val name: String,
+ interface DatabaseConfiguration {
+  var schema: SqlDriver.Schema
+  var create: (SqlDriver) -> Unit
+  var upgrade: (SqlDriver, Int, Int) -> Unit
+  var journalMode: Boolean?
+  var key: String?
+  open fun dbPath(): String
+}
+
+open class FileDatabaseConfiguration(
+  var name: String,
   var path: String,
-  var schema: SqlDriver.Schema,
-  var create: (SqlDriver) -> Unit,
-  var upgrade: (SqlDriver, Int, Int) -> Unit,
-  var journalMode: Boolean = true,
-  val memory: Boolean = false,
-  var key: String? = null,
-) {
-  fun dbPath(): String {
-    if (memory) return ":memory:"
+  override var schema: SqlDriver.Schema,
+  override var create: (SqlDriver) -> Unit,
+  override var upgrade: (SqlDriver, Int, Int) -> Unit,
+  override var journalMode: Boolean? = true,
+  override var key: String? = ""
+) : DatabaseConfiguration {
+  override fun dbPath(): String {
     return path + name
   }
 }
+
+open class MemoryDatabaseConfiguration(
+  override var schema: SqlDriver.Schema,
+  override var create: (SqlDriver) -> Unit,
+  override var upgrade: (SqlDriver, Int, Int) -> Unit,
+  override var journalMode: Boolean? = true,
+  override var key: String? = ""
+) : FileDatabaseConfiguration(":memory:", "", schema, create, upgrade, journalMode, key)
+
 
 class SqlJsCipherDriver (var configuration: DatabaseConfiguration): SqlDriver {
   private val db = createDatabase(configuration.dbPath(), js("{ verbose: console.log }"))
@@ -32,11 +48,11 @@ class SqlJsCipherDriver (var configuration: DatabaseConfiguration): SqlDriver {
   private var transaction: Transacter.Transaction? = null
 
   init {
-    if (configuration.journalMode ) {
+    if (configuration.journalMode == true) {
       db.pragma("journal_mode = WAL")
     }
     if (configuration.key?.isNotBlank() == true) {
-      db.pragma("key = WAL")
+      db.pragma("key = '${configuration.key}'")
     }
     migrateIfNeeded(configuration.create, configuration.upgrade, configuration.schema.version)
   }

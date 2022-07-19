@@ -12,11 +12,11 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-class JsDriverTest {
+open class JsDriverTest {
 
-  private lateinit var driver: SqlDriver
+  internal lateinit var driver: SqlDriver
 
-  private val schema = object : SqlDriver.Schema {
+  internal val schema = object : SqlDriver.Schema {
     override val version: Int = 1
 
     override fun create(driver: SqlDriver) {
@@ -55,8 +55,8 @@ class JsDriverTest {
   }
 
   @BeforeTest
-  fun setup() {
-    var config = DatabaseConfiguration(":memory:", "", schema, {
+  open fun setup() {
+    val config = MemoryDatabaseConfiguration(schema, {
       schema.create(it)
     }, { driver, oldVersion, newVersion ->
       schema.migrate(driver, oldVersion, newVersion)

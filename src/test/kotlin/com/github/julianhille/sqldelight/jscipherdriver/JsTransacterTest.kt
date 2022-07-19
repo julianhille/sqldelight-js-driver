@@ -29,7 +29,7 @@ class JsTransacterTest {
 
   @BeforeTest
   fun setup() {
-    var config = DatabaseConfiguration(":memory:", "", schema, {
+    var config = MemoryDatabaseConfiguration(schema, {
       schema.create(it)
     }, { driver, oldVersion, newVersion ->
       schema.migrate(driver, oldVersion, newVersion)
