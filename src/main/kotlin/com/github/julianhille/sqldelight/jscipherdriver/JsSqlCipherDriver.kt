@@ -200,7 +200,6 @@ class SqlJsCipherCursor(private val statementIterator: StatementIterator): SqlCu
     lastResult = statementIterator.next()
     console.log(lastResult)
 
-    js("console.trace()")
     return lastResult!!.done.not()
   }
 }
