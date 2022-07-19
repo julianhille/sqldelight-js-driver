@@ -187,8 +187,7 @@ class SqlJsCipherCursor(private val statementIterator: StatementIterator): SqlCu
 
   fun getBoolean(index: Int): Boolean? {
     val double = (getIndex(index) as? Double)
-    if (double == null) return null
-    else return double.toLong() == 1L
+    return double?.let { double.toLong() == 1L }
   }
 
   override fun next(): Boolean {
