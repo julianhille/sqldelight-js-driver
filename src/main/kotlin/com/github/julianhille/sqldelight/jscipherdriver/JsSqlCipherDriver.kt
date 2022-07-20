@@ -163,16 +163,6 @@ class SqlJsCipherStatement: SqlPreparedStatement {
   override fun bindString(index: Int, string: String?) {
     parameters.add(string)
   }
-
-  fun bindBoolean(index: Int, boolean: Boolean?) {
-    parameters.add(
-      when (boolean) {
-        null -> null
-        true -> 1.0
-        false -> 0.0
-      }
-    )
-  }
 }
 
 class SqlJsCipherCursor(private val statementIterator: StatementIterator): SqlCursor {
@@ -196,11 +186,6 @@ class SqlJsCipherCursor(private val statementIterator: StatementIterator): SqlCu
   }
 
   override fun getDouble(index: Int): Double? = getIndex(index)
-
-  fun getBoolean(index: Int): Boolean? {
-    val double = (getIndex(index) as? Double)
-    return double?.let { double.toLong() == 1L }
-  }
 
   override fun next(): Boolean {
     if (columns.isEmpty()) {
