@@ -14,8 +14,8 @@ external fun createDatabase(path: String? = definedExternally, options: Database
   var schema: SqlDriver.Schema
   var create: (SqlDriver) -> Unit
   var upgrade: (SqlDriver, Int, Int) -> Unit
-  var journalMode: Boolean?
-  var key: String?
+  var journalMode: Boolean
+  var key: String
   open fun dbPath(): String
 }
 
@@ -25,8 +25,8 @@ open class FileDatabaseConfiguration(
   override var schema: SqlDriver.Schema,
   override var create: (SqlDriver) -> Unit,
   override var upgrade: (SqlDriver, Int, Int) -> Unit,
-  override var journalMode: Boolean? = true,
-  override var key: String? = ""
+  override var journalMode: Boolean = true,
+  override var key: String = ""
 ) : DatabaseConfiguration {
   override fun dbPath(): String {
     return path + name
@@ -37,8 +37,8 @@ open class MemoryDatabaseConfiguration(
   override var schema: SqlDriver.Schema,
   override var create: (SqlDriver) -> Unit,
   override var upgrade: (SqlDriver, Int, Int) -> Unit,
-  override var journalMode: Boolean? = true,
-  override var key: String? = ""
+  override var journalMode: Boolean = true,
+  override var key: String = ""
 ) : FileDatabaseConfiguration(":memory:", "", schema, create, upgrade, journalMode, key)
 
 
