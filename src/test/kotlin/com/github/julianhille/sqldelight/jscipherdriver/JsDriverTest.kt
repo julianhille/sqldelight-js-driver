@@ -225,7 +225,7 @@ class JsDriverEncryptTest: JsDriverTest() {
       schema.create(it)
     }, { driver, oldVersion, newVersion ->
       schema.migrate(driver, oldVersion, newVersion)
-    }, true, "password")
+    }, true, "password", "rc4")
     driver = SqlJsCipherDriver(config)
   }
 }

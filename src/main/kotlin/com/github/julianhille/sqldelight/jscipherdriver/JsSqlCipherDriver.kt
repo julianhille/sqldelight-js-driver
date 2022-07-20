@@ -16,6 +16,7 @@ external fun createDatabase(path: String? = definedExternally, options: Database
   var upgrade: (SqlDriver, Int, Int) -> Unit
   var journalMode: Boolean
   var key: String
+  var cipher: String
   open fun dbPath(): String
 }
 
@@ -26,7 +27,8 @@ open class FileDatabaseConfiguration(
   override var create: (SqlDriver) -> Unit,
   override var upgrade: (SqlDriver, Int, Int) -> Unit,
   override var journalMode: Boolean = true,
-  override var key: String = ""
+  override var key: String = "",
+  override var cipher: String = ""
 ) : DatabaseConfiguration {
   override fun dbPath(): String {
     return path + name
@@ -38,7 +40,8 @@ open class MemoryDatabaseConfiguration(
   override var create: (SqlDriver) -> Unit,
   override var upgrade: (SqlDriver, Int, Int) -> Unit,
   override var journalMode: Boolean = true,
-  override var key: String = ""
+  override var key: String = "",
+  override var cipher: String = ""
 ) : FileDatabaseConfiguration(":memory:", "", schema, create, upgrade, journalMode, key)
 
 
@@ -53,6 +56,9 @@ class SqlJsCipherDriver (var configuration: DatabaseConfiguration): SqlDriver {
     }
     if (configuration.key?.isNotBlank() == true) {
       db.pragma("key = '${configuration.key}'")
+    }
+    if (configuration.key?.isNotBlank() == true) {
+      db.pragma("cipher = '${configuration.cipher}'")
     }
     migrateIfNeeded(configuration.create, configuration.upgrade, configuration.schema.version)
   }
@@ -71,7 +77,6 @@ class SqlJsCipherDriver (var configuration: DatabaseConfiguration): SqlDriver {
   private fun Statement.bind(binders: (SqlPreparedStatement.() -> Unit)?) = binders?.let {
     val bound = SqlJsCipherStatement()
     binders(bound)
-    println(bound.parameters)
     bind(bound.parameters.toTypedArray())
   }
 
