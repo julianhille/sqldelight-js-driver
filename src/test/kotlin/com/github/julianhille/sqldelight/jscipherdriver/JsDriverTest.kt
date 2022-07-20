@@ -215,3 +215,17 @@ open class JsDriverTest {
     }
   }
 }
+
+
+class JsDriverEncryptTest: JsDriverTest() {
+
+  @BeforeTest
+  override fun setup() {
+    val config = MemoryDatabaseConfiguration(schema, {
+      schema.create(it)
+    }, { driver, oldVersion, newVersion ->
+      schema.migrate(driver, oldVersion, newVersion)
+    }, true, "password")
+    driver = SqlJsCipherDriver(config)
+  }
+}
