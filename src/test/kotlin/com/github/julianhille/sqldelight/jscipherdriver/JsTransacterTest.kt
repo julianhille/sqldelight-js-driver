@@ -29,7 +29,6 @@ class JsTransacterTest {
 
   @BeforeTest
   fun setup() {
-
     var config = DatabaseConfiguration(":memory:", "", schema, {
       schema.create(it)
     }, { driver, oldVersion, newVersion ->
@@ -56,7 +55,6 @@ class JsTransacterTest {
   }
 
   @Test fun afterCommit_does_not_run_after_transaction_rollbacks() {
-    
     var counter = 0
     transacter.transaction {
       afterCommit { counter++ }
@@ -68,7 +66,6 @@ class JsTransacterTest {
   }
 
   @Test fun afterCommit_runs_after_enclosing_transaction_commits() {
-
     var counter = 0
     transacter.transaction {
       afterCommit { counter++ }
@@ -86,7 +83,6 @@ class JsTransacterTest {
   }
 
   @Test fun afterCommit_does_not_run_in_nested_transaction_when_enclosing_rolls_back()  { 
-
     var counter = 0
     transacter.transaction {
       afterCommit { counter++ }
@@ -103,7 +99,6 @@ class JsTransacterTest {
   }
 
   @Test fun afterCommit_does_not_run_in_nested_transaction_when_nested_rolls_back() { 
-
     var counter = 0
     transacter.transaction {
       afterCommit { counter++ }
@@ -121,7 +116,6 @@ class JsTransacterTest {
   }
 
   @Test fun afterRollback_no_ops_if_the_transaction_never_rolls_back() {
-
     var counter = 0
     transacter.transaction {
       afterRollback { counter++ }
@@ -131,7 +125,6 @@ class JsTransacterTest {
   }
 
   @Test fun afterRollback_runs_after_a_rollback_occurs() {
-
     var counter = 0
     transacter.transaction {
       afterRollback { counter++ }
@@ -142,7 +135,6 @@ class JsTransacterTest {
   }
 
   @Test fun afterRollback_runs_after_an_inner_transaction_rolls_back() {
-
     var counter = 0
     transacter.transaction {
       afterRollback { counter++ }
@@ -156,7 +148,6 @@ class JsTransacterTest {
   }
 
   @Test fun afterRollback_runs_in_an_inner_transaction_when_the_outer_transaction_rolls_back() {
-
     var counter = 0
     transacter.transaction {
       transaction {
@@ -169,7 +160,6 @@ class JsTransacterTest {
   }
 
   @Test fun transactions_close_themselves_out_properly() {
-
     var counter = 0
     transacter.transaction {
       afterCommit { counter++ }
@@ -183,7 +173,6 @@ class JsTransacterTest {
   }
 
   @Test fun setting_no_enclosing_fails_if_there_is_a_currently_running_transaction() {
-
     transacter.transaction(noEnclosing = true) {
       assertFailsWith<IllegalStateException> {
         transacter.transaction(noEnclosing = true) {

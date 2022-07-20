@@ -7,7 +7,6 @@ import com.squareup.sqldelight.Transacter
 import org.khronos.webgl.Uint8Array
 import org.khronos.webgl.Int8Array
 
-
 @JsNonModule @JsModule("better-sqlite3-multiple-ciphers")
 external fun createDatabase(path: String? = definedExternally, options: DatabaseOptions? = definedExternally): Database
 
@@ -21,18 +20,16 @@ class DatabaseConfiguration(
   val memory: Boolean = false,
   var key: String? = null,
 ) {
-
   fun dbPath(): String {
     if (memory) return ":memory:"
     return path + name
   }
 }
 
-class SqlJsCipherDriver (var configuration: DatabaseConfiguration ): SqlDriver {
+class SqlJsCipherDriver (var configuration: DatabaseConfiguration): SqlDriver {
   private val db = createDatabase(configuration.dbPath(), js("{ verbose: console.log }"))
   private val statements = mutableMapOf<Int, SqlJsCipherStatement>()
   private var transaction: Transacter.Transaction? = null
-
 
   init {
     if (configuration.journalMode ) db.pragma("journal_mode = WAL")
@@ -166,7 +163,6 @@ class SqlJsCipherStatement: SqlPreparedStatement {
 class SqlJsCipherCursor(private val statementIterator: StatementIterator): SqlCursor {
   var lastResult: IteratorResult? = null
   var columns: List<String> = listOf<String>()
-
 
   private fun getIndex(index: Int):  dynamic? /* Number | String | Uint8Array | Nothing? */ {
     val name = columns[index]

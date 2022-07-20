@@ -65,7 +65,6 @@ class JsQueryTest {
   }
 
   @Test fun executeAsOne() {
-
     val data1 = TestData(1, "val1")
     driver.insertTestData(data1)
 
@@ -73,7 +72,6 @@ class JsQueryTest {
   }
 
   @Test fun executeAsOneTwoTimes() {
-
     val data1 = TestData(1, "val1")
     driver.insertTestData(data1)
 
@@ -98,7 +96,6 @@ class JsQueryTest {
   }
 
   @Test fun executeAsOneOrNull() {
-
     val data1 = TestData(1, "val1")
     driver.insertTestData(data1)
 
@@ -120,7 +117,6 @@ class JsQueryTest {
   }
 
   @Test fun executeAsList() {
-
     val data1 = TestData(1, "val1")
     val data2 = TestData(2, "val2")
 
@@ -135,7 +131,6 @@ class JsQueryTest {
   }
 
   @Test fun notifyDataChangedNotifiesListeners() {
-
     val notifies = Atomic(0)
     val query = driver.testDataQuery()
     val listener = object : Query.Listener {
@@ -152,7 +147,6 @@ class JsQueryTest {
   }
 
   @Test fun removeListenerActuallyRemovesListener() {
-
     val notifies = Atomic(0)
     val query = driver.testDataQuery()
     val listener = object : Query.Listener {

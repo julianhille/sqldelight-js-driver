@@ -29,7 +29,6 @@ external interface PragmaOption {
   var simple: Boolean?
 }
 
-
 external interface BackupOptions
 external interface Buffer
 external interface SerializeOptions
@@ -91,7 +90,6 @@ open external class Database() {
 
   constructor(memory: Array<Byte>, dbOptions: DatabaseOptions? = definedExternally)
   constructor(path: String, dbOptions: DatabaseOptions? = definedExternally)
-
 
   fun prepare(sql: String): Statement
   fun exec(sql: String): Database

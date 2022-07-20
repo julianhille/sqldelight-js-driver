@@ -56,7 +56,6 @@ class JsDriverTest {
 
   @BeforeTest
   fun setup() {
-
     var config = DatabaseConfiguration(":memory:", "", schema, {
       schema.create(it)
     }, { driver, oldVersion, newVersion ->
