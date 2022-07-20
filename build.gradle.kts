@@ -1,5 +1,5 @@
 val sqldelight_version = "1.5.3"
-val betterCipherSqlVersion = "7.5.3"
+val betterCipherSqlVersion = "7.6.2"
 group = "com.github.julianhille.sqldelight.drivers.jscipher"
 version = "1.0-SNAPSHOT"
 

@@ -339,10 +339,10 @@ base64id@2.0.0, base64id@~2.0.0:
   resolved "https://registry.yarnpkg.com/base64id/-/base64id-2.0.0.tgz#2770ac6bc47d312af97a8bf9a634342e0cd25cb6"
   integrity sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==
 
-better-sqlite3-multiple-ciphers@7.5.3:
-  version "7.5.3"
-  resolved "https://registry.yarnpkg.com/better-sqlite3-multiple-ciphers/-/better-sqlite3-multiple-ciphers-7.5.3.tgz#06b2ed752d5f74a82295693b4f86ff7648a2c270"
-  integrity sha512-9vZ7jx94Mz4lrGzHJjNZr25zusE+tUwy/xrnZiKSGqUSNoobD7w4NZpfbvbi3p/wMWO/pYqco0tyNen39SRv+w==
+better-sqlite3-multiple-ciphers@7.6.2:
+  version "7.6.2"
+  resolved "https://registry.yarnpkg.com/better-sqlite3-multiple-ciphers/-/better-sqlite3-multiple-ciphers-7.6.2.tgz#14bdae0a129fa7b60b07a175f0c047cc5fef7567"
+  integrity sha512-d8JpZH91yZqVICBG21TMLTMT4BaKa3+TMJFPgEuKbDtV82NOIHBhBciK+gQLXZQICZzqDOznAXCPzBXrGxtY2g==
   dependencies:
     bindings "^1.5.0"
     prebuild-install "^7.1.0"
