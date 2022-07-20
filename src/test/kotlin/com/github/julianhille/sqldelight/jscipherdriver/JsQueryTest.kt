@@ -54,8 +54,7 @@ class JsQueryTest {
       schema.create(it)
     }, { driver, oldVersion, newVersion ->
       schema.migrate(driver, oldVersion, newVersion)
-    }
-    )
+    })
     driver = SqlJsCipherDriver(config)
   }
 
