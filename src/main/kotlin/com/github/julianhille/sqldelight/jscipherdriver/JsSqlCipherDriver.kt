@@ -47,7 +47,7 @@ open class MemoryDatabaseConfiguration(
 
 class SqlJsCipherDriver (var configuration: DatabaseConfiguration): SqlDriver {
   private val db = createDatabase(configuration.dbPath(), js("{ verbose: console.log }"))
-  private val statements = mutableMapOf<Int, SqlJsCipherStatement>()
+  private val statements = mutableMapOf<Int, Statement>()
   private var transaction: Transacter.Transaction? = null
 
   init {
@@ -119,7 +119,12 @@ class SqlJsCipherDriver (var configuration: DatabaseConfiguration): SqlDriver {
     }
   }
 
-  private fun createOrGetStatement(identifier: Int?, sql: String): Statement = db.prepare(sql)
+  private fun createOrGetStatement(identifier: Int?, sql: String): Statement =
+    if (identifier == null) {
+      db.prepare(sql)
+    } else {
+      statements.getOrPut(identifier, { db.prepare(sql) }).apply { statements.remove(identifier) }
+    }
 
   fun getVersion(): Int = (db.pragma("user_version") as? Double)?.toInt() ?: 0
 
