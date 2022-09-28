@@ -14,11 +14,11 @@ open external class SqliteError: Error {
 }
 
 external class DatabaseOptions {
-  var readonly: Boolean  = definedExternally // = false
-  val fileMustExist: Boolean  = definedExternally // = false
-  val timeout: Int  = definedExternally // = 5000
-  val verbose: Boolean  = definedExternally // = false
-  val nativeBindingPath: Boolean  = definedExternally // = false
+  var readonly: Boolean = definedExternally // = false
+  val fileMustExist: Boolean = definedExternally // = false
+  val timeout: Int = definedExternally // = 5000
+  val verbose: Boolean = definedExternally // = false
+  val nativeBindingPath: Boolean = definedExternally // = false
 }
 
 external object PragmaOptions {
@@ -52,7 +52,7 @@ external class Result {
 }
 
 external class IteratorResult {
-  var value: Map<String, Any>?  = definedExternally
+  var value: Map<String, Any>? = definedExternally
   var done: Boolean
 }
 
