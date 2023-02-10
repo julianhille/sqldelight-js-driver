@@ -126,7 +126,7 @@ class SqlJsCipherDriver (var configuration: DatabaseConfiguration): SqlDriver {
       statements.getOrPut(identifier, { db.prepare(sql) }).apply { statements.remove(identifier) }
     }
 
-  fun getVersion(): Int = (db.pragma("user_version") as? Double)?.toInt() ?: 0
+  fun getVersion(): Int = (db.pragma("user_version")[0]["user_version"] as? Double)?.toInt() ?: 0
 
   private fun setVersion(version: Int): Unit {
     db.pragma("user_version=${version}")

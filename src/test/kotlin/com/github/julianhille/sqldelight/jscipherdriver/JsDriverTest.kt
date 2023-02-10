@@ -14,7 +14,7 @@ import kotlin.test.assertTrue
 
 open class JsDriverTest {
 
-  internal lateinit var driver: SqlDriver
+  internal lateinit var driver: SqlJsCipherDriver
 
   internal val schema = object : SqlDriver.Schema {
     override val version: Int = 1
@@ -213,6 +213,10 @@ open class JsDriverTest {
       it.getBytes(3)?.forEachIndexed { index, byte -> assertEquals(index.toByte(), byte) }
       assertEquals(Float.MAX_VALUE.toDouble(), it.getDouble(4))
     }
+  }
+
+  @Test fun test_get_version_returns_expected_schema_version() {
+    assertEquals(1, driver.getVersion())
   }
 }
 
