@@ -51,15 +51,19 @@ class SqlJsCipherDriver (var configuration: DatabaseConfiguration): SqlDriver {
   private var transaction: Transacter.Transaction? = null
 
   init {
-    if (configuration.journalMode == true) {
-      db.pragma("journal_mode = WAL")
+
+    if (configuration.cipher?.isNotBlank() == true) {
+      db.pragma("cipher = '${configuration.cipher}'")
     }
+
     if (configuration.key?.isNotBlank() == true) {
       db.pragma("key = '${configuration.key}'")
     }
-    if (configuration.key?.isNotBlank() == true) {
-      db.pragma("cipher = '${configuration.cipher}'")
+
+    if (configuration.journalMode == true) {
+      db.pragma("journal_mode = WAL")
     }
+
     migrateIfNeeded(configuration.create, configuration.upgrade, configuration.schema.version)
   }
 

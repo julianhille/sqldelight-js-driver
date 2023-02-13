@@ -225,7 +225,13 @@ class JsDriverEncryptTest: JsDriverTest() {
 
   @BeforeTest
   override fun setup() {
-    val config = MemoryDatabaseConfiguration(schema, {
+    js("var fs = require ('fs');")
+    js("if(fs.existsSync('database')) {" +
+            " fs.rmSync('database', {recursive: true, force: true})" +
+            "}")
+    js("fs.mkdirSync('database', {recursive: true})")
+    val filePath = js("fs.mkdtempSync('database/db-')")
+    val config = FileDatabaseConfiguration("db.sql", filePath + '/', schema, {
       schema.create(it)
     }, { driver, oldVersion, newVersion ->
       schema.migrate(driver, oldVersion, newVersion)
