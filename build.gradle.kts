@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
      testImplementation(kotlin("test-js", "1.7.10"))
-     testImplementation(npm("better-sqlite3-multiple-ciphers", betterCipherSqlVersion))
+     implementation(npm("better-sqlite3-multiple-ciphers", betterCipherSqlVersion))
      api("com.squareup.sqldelight:runtime:1.5.3")
      implementation("com.squareup.sqldelight:coroutines-extensions:$sqldelight_version")
 }
